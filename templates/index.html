@@ -1,16 +1,33 @@
-{% extends "base.html" %}
+{% extends "base_with_image.html" %}
+{% block right_text %}
+    Привет, {{username}}!
+{% endblock %}
 
 {% block content %}
-<h1>Local Library Home</h1>
+    {% for category in categories %}
 
-  <p>Welcome to <em>LocalLibrary</em>, a very basic Django website developed as a tutorial example on the Mozilla Developer Network.</p>
+        <div class="category-card" id="{{ category.id }}" style='background-image: url("{{ category.main_image.get_url }}");'>
 
-<h2>Dynamic content</h2>
+            <element class="overlay">
+                <h2 class="display-1 my-auto text-center">{{ category.name }}<br></h2>
+            </element>
 
-  <p>The library has the following record counts:</p>
-  <ul>
-    <li><strong>Всего фотосессий:</strong> {{ num }}</li>
-    <li><strong>Фотосессии в обработке:</strong> {{ num_work }}</li>
-  </ul>
+         </div>
 
+    <div id="portfolio" class="paddsection">
+        <div class="photo-gallery">
+            <div class="container">
+                <div class="row">
+
+                    {%  for image in category.get_images %}
+                        <div class="col-sm-6 col-md-4 col-lg-3  item">
+                            <a href="{{ image.get_url }}" data-lightbox="photos"><img class="img-fluid" src="{{ image.get_url}}"></a>
+                        </div>
+                    {% endfor %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
 {% endblock %}

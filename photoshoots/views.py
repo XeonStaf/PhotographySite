@@ -1,27 +1,22 @@
-from django.shortcuts import render
 from .models import photo_shoot
 from django.views import generic
-from django.contrib.auth.mixins import LoginRequiredMixin
+from portfolio.models import Image
+import random
 
-# Create your views here.
-def index(request):
-    """
-    Функция отображения для домашней страницы сайта.
-    """
-    # Генерация "количеств" некоторых главных объектов
-    num = photo_shoot.objects.all().count()
-    num_work = photo_shoot.objects.filter(state__exact=2).count()
 
-    return render(
-        request,
-        'index.html',
-        context={'num' : num, 'num_work' : num_work},
-    )
-
-class PhotoSetByUserListView(LoginRequiredMixin, generic.ListView):
+class PhotoShootsDetailView(generic.DetailView):
+    """Страничка, где клиент выбирает фотографии, которые ему понравились"""
     model = photo_shoot
-    template_name = 'photoshoots/users_photosets.html'
-    paginate_by = 10
 
-    def get_queryset(self):
-        return photo_shoot.objects.filter(linkUser = self.request.user)
+    def get_context_data(self, **kwargs):
+        # Генерация случайной фотографии из серии на обложку
+        context = super().get_context_data(**kwargs)
+        all_photo = Image.objects.filter(album=context['object'].linkAlbum)
+        result = random.choice(all_photo.all()).get_url()
+        print(result)
+        context['main_photo'] = result
+        return context
+
+
+PhotoShootsDetail = PhotoShootsDetailView.as_view()
+

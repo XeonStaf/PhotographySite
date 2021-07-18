@@ -1,0 +1,20 @@
+{% extends "base_with_image.html" %}
+
+{% block main_content %}
+    <element class="overlay">
+        <h2 class="display-1 my-auto text-center">{{ object.name }}
+        <div class="row text-center">
+            <div class="col">
+                <p style="color: whitesmoke">Выбрать {{ object.num_choose }} снимков</p>
+            </div>
+            <div class="col">
+                <p style="color: whitesmoke">{{ object.date}}</p>
+            </div>
+        </div>
+        </h2>
+    </element>
+{% endblock %}
+
+{% block content %}
+    <h2>Вам необходимо выбрать 10 снимков</h2>
+{% endblock %}

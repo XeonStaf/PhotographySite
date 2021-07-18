@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block main_page %}
+    <div class="container pb-5" style="min-height: 100%; padding-top:15vh">
+    <h2>Привет, {{ request.user.first_name }}</h2>
+    {% if photo_shoot_list %}
+    <h2>Список фотосессий</h2>
+
+        {% for card in photo_shoot_list %}
+            <div class="card photo-data mt-3 ">
+                <div class="card-header ">
+                    <h3>{{ card.name }}       <span class="col status badge badge-secondary mb-3" style="background-color: {{ card.get_color_status }}">{{ card.get_text_status }}</span></h3>
+                    <p>Дата Съемки: {{ card.date }}</p>
+                </div>
+                <div class="card-body ">
+                    <div class="row ">
+                        {% if card.state == 3 %}
+                            <p>Если вы хотите изменить свой выбор, попросите об этом фотографа</p>
+                        {% endif %}
+                        {% if card.state == 2 %}
+                            <p>Я пришлю вам сообщение, как только завершу =)</p>
+                        {% endif %}
+                        {% if card.state > 3%}
+                        <a href="{{ card.get_moodboard_url }}" class="btn btn-outline-dark btn-action btn-sm ">Moodboard</a>
+                        {% endif %}
+                        {% if card.state == 4 %}
+                        <a href="{{ card.get_absolute_url }}" class="btn btn-outline-dark btn-action btn-sm ">Выбрать</a>
+                        {% endif %}
+
+                        {% if card.state == 1 %}
+                        <a href="{{ card.result_link }}" class="btn btn-outline-dark btn-action btn-sm ">Результат</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+    <h3>Похоже, что вы еще не работали со мной.</h3>
+        <br><br><br><br>
+    {% endif %}
+    </div>
+{% endblock %}

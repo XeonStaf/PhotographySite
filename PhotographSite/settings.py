@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -38,7 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    'user.apps.UserConfig',
     'photoshoots.apps.PhotoshootsConfig',
+    'portfolio.apps.PortfolioConfig',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -75,6 +78,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media'
             ],
         },
     },
@@ -125,13 +129,20 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
+LANGUAGE_CODE = 'ru-RU'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
-LOGIN_REDIRECT_URL = '/photoshoots/myphoto/'
+STATIC_ROOT = STATIC_URL
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
+MEDIA_DIR = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = MEDIA_DIR
+MEDIA_URL = '/media/'
+LOGIN_REDIRECT_URL = '/user/personal'
 
 
 # Default primary key field type
