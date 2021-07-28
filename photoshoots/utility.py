@@ -1,3 +1,4 @@
+
 States = [
     (1, "Отправлено", "#3ea635"),
     (2, "Обработка", "#b10006"),
@@ -10,3 +11,7 @@ States = [
 States_for_model = []
 for i in States:
     States_for_model.append((i[0], i[1]))
+
+
+def permission(obj, request):
+    return request.user and request.user.is_authenticated and (obj.linkUser == request.user or request.user.is_superuser)

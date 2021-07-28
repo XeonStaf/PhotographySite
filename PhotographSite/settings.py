@@ -26,7 +26,8 @@ SECRET_KEY = 'django-insecure-p9v^t7*+_z4!!h+)52ig!#)2j7jq$cq4^ctdag=4y1%iq&p4)n
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+]
 
 
 # Application definition
@@ -42,6 +43,8 @@ INSTALLED_APPS = [
     'user.apps.UserConfig',
     'photoshoots.apps.PhotoshootsConfig',
     'portfolio.apps.PortfolioConfig',
+    'photographer_interface.apps.PhotographerInterfaceConfig',
+    'vk_bot.apps.VkBotConfig',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',

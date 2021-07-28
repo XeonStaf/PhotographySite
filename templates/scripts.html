@@ -9,3 +9,7 @@
 <script src="{% static 'js/lightbox.min.js' %}"></script>
 <script src="{% static 'js/main.js' %}"></script>
 {% endif %}
+{% if special_file %}
+<script src="{% static 'edited_file/lightbox.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+{% endif %}

@@ -2,7 +2,7 @@ from django.shortcuts import render
 from .models import Categories
 from django.templatetags.static import static
 
-# Create your views here.
+
 def index(request):
     """
     Функция отображения для домашней страницы сайта.
@@ -13,6 +13,10 @@ def index(request):
     else:
         username = "Гость"
 
+    menu = [
+        ("bi-person-square", "personal-area")
+    ]
+
     return render(
         request,
         'index.html',
@@ -20,6 +24,8 @@ def index(request):
             'categories' : categories,
             'main_photo' : static('/images/home.jpg'),
             'needed_js_file' : True,
-            'right_text' : "Привет, " + username + "!"
+            'right_text' : "Привет, " + username + "!",
+            'menu' : menu,
+            'title' : 'Главная Страничка'
         },
     )

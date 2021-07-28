@@ -2,7 +2,7 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>Folio Bootstrap Template - Index</title>
+    <title>{{ title }}</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
     <link href="assets/img/favicon.png" rel="icon">
@@ -14,7 +14,12 @@
     <link href="{% static 'vendor/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
     <link href="{% static 'vendor/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
     <link href="{% static 'vendor/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
-    <link href="{% static 'style/lightbox.min.css' %}" rel="stylesheet">
+
     <link href="{% static 'style/style.css' %}" rel="stylesheet">
     <link href="{% static 'style/auth-style.css' %}" rel="stylesheet">
+    {% if special_file %}
+        <link href="{% static 'edited_file/lightbox.css' %}" rel="stylesheet">
+    {% else %}
+        <link href="{% static 'style/lightbox.min.css' %}" rel="stylesheet">
+    {% endif %}
 </head>

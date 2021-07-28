@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block style %}
+    {% load static %}
+<link href="{% static 'vendor/dropzone/dropzone.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block main_page %}
+
+    <div class="container pb-5" style="min-height: 100%; padding-top:15vh">
+        <h3>Необходимо выбрать альбом, только потом загружать фото</h3><br>
+        <form action="{% url 'upload' %}"  class="dropzone" method="POST" id="my-awesome-dropzone">{% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="save btn btn-default">Save</button>
+        </form>
+    </div>
+{% endblock %}
+
+{% block script %}
+{% load static %}
+<script src="{% static 'vendor/dropzone/dropzone.js' %}"></script>
+{% endblock %}

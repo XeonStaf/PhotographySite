@@ -19,7 +19,7 @@
                         {% if card.state == 2 %}
                             <p>Я пришлю вам сообщение, как только завершу =)</p>
                         {% endif %}
-                        {% if card.state > 3%}
+                        {% if card.state > 3 and card.moodboard%}
                         <a href="{{ card.get_moodboard_url }}" class="btn btn-outline-dark btn-action btn-sm ">Moodboard</a>
                         {% endif %}
                         {% if card.state == 4 %}

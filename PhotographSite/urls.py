@@ -19,13 +19,16 @@ from django.urls import include
 from user.views import account_signup_view
 from django.conf.urls.static import static
 from . import settings
+from portfolio.views import index
 
 
 urlpatterns = [
+    path('', index, name='portfolio'),
     path('login/', view=account_signup_view),
     path('accounts/', include('allauth.urls')),
     path('user/', include('user.urls')),
     path('admin/', admin.site.urls),
     path('photoshoots/', include('photoshoots.urls')),
-    path('portfolio/', include('portfolio.urls'))
+    path('portfolio/', include('portfolio.urls')),
+    path('photographer-interface/', include('photographer_interface.urls'))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
