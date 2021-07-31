@@ -20,11 +20,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-p9v^t7*+_z4!!h+)52ig!#)2j7jq$cq4^ctdag=4y1%iq&p4)n'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
 ALLOWED_HOSTS = [
 ]
@@ -48,8 +43,9 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'allauth.socialaccount.providers.vk'
-
+    'allauth.socialaccount.providers.vk',
+    'crispy_forms',
+    'django_starfield'
 ]
 
 MIDDLEWARE = [
@@ -152,5 +148,20 @@ LOGIN_REDIRECT_URL = '/user/personal'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 SITE_ID = 1
+
+data = {}
+with open('PhotographSite/secret.txt', 'r') as f:
+    for i in f.readlines():
+        inp = i.replace(' ', '').replace('\n', '').split('=')
+        if inp[0] == "DEBUG":
+            if inp[1] == "False":
+                inp[1] = False
+            else:
+                inp[1] = True
+        data[inp[0]] = str(inp[1])
+
+VK_BOT_TOKEN = data['VK_BOT_TOKEN']
+SECRET_KEY = data['SECRET_KEY']
+DEBUG = data['DEBUG']

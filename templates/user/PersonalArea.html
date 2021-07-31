@@ -1,12 +1,11 @@
 {% extends "base.html" %}
 {% block main_page %}
-    <div class="container pb-5" style="min-height: 100%; padding-top:15vh">
+    <div class="container pb-5 d-flex flex-column align-items-center" style="min-height: 100%; padding-top:15vh;">
     <h2>Привет, {{ request.user.first_name }}</h2>
     {% if photo_shoot_list %}
-    <h2>Список фотосессий</h2>
-
+    <h3>Список фотосессий</h3>
         {% for card in photo_shoot_list %}
-            <div class="card photo-data mt-3 ">
+            <div class="card photo-data w-100 mt-3 ">
                 <div class="card-header ">
                     <h3>{{ card.name }}       <span class="col status badge badge-secondary mb-3" style="background-color: {{ card.get_color_status }}">{{ card.get_text_status }}</span></h3>
                     <p>Дата Съемки: {{ card.date }}</p>
@@ -28,11 +27,13 @@
 
                         {% if card.state == 1 %}
                         <a href="{{ card.result_link }}" class="btn btn-outline-dark btn-action btn-sm ">Результат</a>
+                        <a href="{% url 'review' pk=card.id %}" class="btn btn-outline-dark btn-action btn-sm ">Отзыв</a>
                         {% endif %}
                     </div>
                 </div>
             </div>
         {% endfor %}
+
     {% else %}
     <h3>Похоже, что вы еще не работали со мной.</h3>
         <br><br><br><br>

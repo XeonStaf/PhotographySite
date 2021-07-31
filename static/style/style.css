@@ -1082,7 +1082,7 @@ p {
     border: 2px solid seashell;
     border-radius: 100px;
     margin: .4rem .8rem !important;
-    width: 30vh;
+    width: 35vh;
 }
 
 .btn-white:hover {
@@ -1104,10 +1104,14 @@ p {
 
 .photo-gallery .item {
     padding-bottom: 30px;
+    animation: fadein 2s;
+    -moz-animation: fadein 2s; /* Firefox */
+    -webkit-animation: fadein 2s; /* Safari and Chrome */
+    -o-animation: fadein 2s; /* Opera */
 }
 
+
 .photo-data {
-    width: 90vh;
 }
 
 .photo-data p {
@@ -1134,7 +1138,7 @@ p {
     width: 20vh;
     height: 5vh;
     font-size: .75em;
-    line-height: 30px;
+    line-height: 5vh;
     padding: 0 0px;
 }
 

@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block main_page %}
+    <div class="modal fade" id="warning" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="ModalLabel">Хэй!</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <span id="text-warning"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container pb-5" style="min-height: 100%; padding-top:15vh">
+        <h3 class="d-flex justify-content-center">Пожалуйста, ответьте на вопросы ниже</h3>
+        <div class="d-flex justify-content-center pt-2">
+            <form id="form-review">
+                {% crispy form %}
+            </form>
+        </div>
+    </div>
+{% endblock %}
+{% block script %}
+    <script>
+        $(function () {
+            $('#form-review').on('submit', function (event) {
+                event.preventDefault();
+                $.ajax({
+                    url: '{% url 'review-confirm' %}',
+                    type: 'POST',
+                    data: {
+                        pk: {{ photoshoot_id }},
+                        content: $('#form-review').serialize(),
+                        csrfmiddlewaretoken: '{{ csrf_token }}',
+                    },
+                    dataType: 'json',
+                    success: function (response) {
+                        $('#text-warning').text("Спасибо большое за отзыв!")
+                        $('#warning').modal('show');
+                        setTimeout(() => {
+                            $(location).attr('href', "{% url 'personal-area' %}");
+                        }, 2000);
+
+                    },
+                    error: function (responce) {
+                        console.log("Some Error just happened...");
+                        $('#text-warning').text(responce.responseJSON.error)
+                        $('#warning').modal('show');
+                    }
+                });
+
+
+            });
+        });
+
+    </script>
+{% endblock %}

@@ -1,20 +1,13 @@
 <header id="header" class="fixed-top {% if navbar_show %} header-scrolled{% endif %} ">
-
     <div class="container d-flex align-items-center justify-content-between{% if navbar_show %} header-scrolled{% endif %} " >
         <p class="logo">
             {{right_text|safe}}
         </p>
         <nav id="navbar" class="navbar">
             <ul>
-
-            <!--todo: Text -> Icons, disable mobile menu-->
                 {% for name, link in menu %}
                     <li><a href="{% url link %}"><i class="bi {{ name }} fa-2x"></i></a></li>
                 {% endfor %}
-                <!--
-                <li><a class="nav-link scrollto" href="#hero">Обо мне</a></li>
-                -->
-
             </ul>
         </nav>
     </div>

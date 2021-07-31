@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block main_page %}
+    <div class="container pb-5" style="min-height: 100%; padding-top:15vh">
+        <h3>Список Всех фотосессий</h3>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Название</th>
+                <th scope="col">Модель</th>
+                <th scope="col">Статус</th>
+                <th scope="col">Выбор</th>
+                <th scope="col">Комменатрий</th>
+                <th scope="col">Ссылка в админ-панель</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for item in photo_shoot_list %}
+                <tr>
+                    <th scope="row">{{ item.id }}</th>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.linkUser }}</td>
+                    <td> <span class="col status badge badge-secondary mb-3" style="background-color: {{ item.get_color_status }}">{{ item.get_text_status }}</span></td>
+                    <td>
+                        <input text="text" id="btn_{{item.id}}" value="{{ item.get_chosen }}" style="position: absolute; top: -10000px">
+                        <a href="#" onclick="document.querySelector('#btn_{{item.id}}').select(); document.execCommand('copy');"><i class="bi bi-clipboard-check"></i></a>
+                    </td>
+                    <td>{{ item.comment }}</td>
+                    <td>
+                        <a href="{% url 'admin:photoshoots_photo_shoot_change' item.id%}"><i class="bi bi-pencil-square"></i></a>
+                    </td>
+                </tr>
+            {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+{% block script %}
+<script>
+    function copytext(el) {
+        var $tmp = $("<textarea>");
+        $("body").append($tmp);
+        $tmp.val($(el).text()).select();
+        document.execCommand("copy");
+        $tmp.remove();
+    }
+</script>
+{% endblock %}
