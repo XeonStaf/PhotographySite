@@ -1,0 +1,67 @@
+/*
+ * Selectable CSS3 Rating Stars by Martin Ivanov (@wemakesitesnet)
+ * @version 1.0
+ * @author Martin Ivanov
+ * @url portfolio http://wemakesites.net/
+ * @url twitter https://twitter.com/wemakesitesnet
+ * @url blog http://acidmartin.wordpress.com/
+ **/
+
+/* Work was allegedly released into the public domain,
+ * as laid out by e-mail.
+ */
+
+.django-starfield,
+.django-starfield label::before
+{
+    display: inline-block;
+}
+ 
+.django-starfield label:hover,
+.django-starfield label:hover ~ label
+{
+    filter: grayscale(0.5);;
+}
+ 
+.django-starfield *
+{
+    margin: 0;
+    padding: 0;
+}
+ 
+.django-starfield input
+{
+    display: none;
+}
+
+.django-starfield
+{
+    unicode-bidi: bidi-override;
+    direction: rtl;
+}
+ 
+.django-starfield label
+{
+    color: #f5b301;
+    filter: grayscale(1);
+}
+ 
+.django-starfield label::before
+{
+    content: '\2605';
+    width: 18px;
+    line-height: 18px;
+    text-align: center;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.django-starfield label span
+{
+    display: none;
+}
+ 
+.django-starfield input:checked ~ label
+{
+    filter: grayscale(0);
+}
