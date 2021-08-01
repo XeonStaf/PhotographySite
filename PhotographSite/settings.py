@@ -15,6 +15,23 @@ import os
 import dj_database_url
 import django_heroku
 
+AWS_ACCESS_KEY_ID = os.environ.get('BUCKETEER_AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.environ.get('BUCKETEER_AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = os.environ.get('BUCKETEER_BUCKET_NAME')
+
+VK_BOT_TOKEN = os.environ.get('VK_BOT_TOKEN')
+SECRET_KEY = os.environ.get('SECRET_KEY')
+DEBUG = os.environ.get('DEBUG')
+
+AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=86400',
+}
+
+AWS_LOCATION = 'static'
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+DEFAULT_FILE_STORAGE = 'PhotographSite.storage_backends.MediaStorage'  # <-- here is where we reference it
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -49,7 +66,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.vk',
     'crispy_forms',
-    'django_starfield'
+    'django_starfield',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -159,18 +177,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 SITE_ID = 1
 
-data = {}
-with open('PhotographSite/secret.txt', 'r') as f:
-    for i in f.readlines():
-        inp = i.replace(' ', '').replace('\n', '').split('=')
-        if inp[0] == "DEBUG":
-            if inp[1] == "False":
-                inp[1] = False
-            else:
-                inp[1] = True
-        data[inp[0]] = inp[1]
-
-VK_BOT_TOKEN = data['VK_BOT_TOKEN']
-SECRET_KEY = data['SECRET_KEY']
-DEBUG = data['DEBUG']
 django_heroku.settings(locals())
+
+

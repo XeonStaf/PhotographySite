@@ -14,7 +14,7 @@ class Image(models.Model):
     image = models.ImageField(upload_to=generate_path)
 
     def __str__(self):
-        return os.path.basename(self.image.path)
+        return os.path.basename(self.image.name)
 
     def name(self):
         return str(self)
@@ -23,26 +23,10 @@ class Image(models.Model):
         return self.image.url
 
 
-@receiver(models.signals.post_delete, sender=Album)
-def auto_delete_file_on_delete(sender, instance, **kwargs):
-    """ Удаление папки с файлами, при удалении альбома"""
-    try:
-        path = generate_path_dir(instance.name, "")
-        path = os.path.join(MEDIA_DIR, path)
-        shutil.rmtree(path)
-    except:
-        pass
-
-
 @receiver(models.signals.post_delete, sender=Image)
 def auto_delete_file_on_delete(sender, instance, **kwargs):
-    """
-    Deletes file from filesystem
-    when corresponding `MediaFile` object is deleted.
-    """
-    if instance.image:
-        if os.path.isfile(instance.image.path):
-            os.remove(instance.image.path)
+    """Deletes file from S3"""
+    instance.image.delete(save=False)
 
 
 class Categories(models.Model):
