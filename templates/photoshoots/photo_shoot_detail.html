@@ -17,30 +17,27 @@
 {% endblock %}
 
 {% block content %}
-    <div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="ModalLabel">Выбор Фото</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p>Вы выбрали <span class="count">{{ object.chosen|length }}</span> из {{ object.num_choose }}
-                        снимков.
-                        <br>
-                        <span id="warning"></span>
-                    </p>
-                    <input type="text" class="form-control" id="comment"
-                           placeholder="Напишите сюда, если есть какие-то пожелания :)" {% if object.comment != "None" %}
-                           value="{{ object.comment }}" {% endif %}">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-all btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                    <button type="button" id="confirm" class="btn btn-all  btn-primary">Подтвердить</button>
-                </div>
-            </div>
-        </div>
+<div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ModalLabel">Выбор Фото</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Вы выбрали <span class="count">{{ object.chosen|length }}</span> из {{ object.num_choose }} снимков.
+            <br>
+            <span id="warning"></span>
+        </p>
+          <input type="text" class="form-control" id="comment" placeholder="Напишите сюда, если есть какие-то пожелания :)" {% if object.comment %} value="{{ object.comment }}" {% endif %}">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-all btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+        <button type="button" id="confirm" class="btn btn-all  btn-primary">Подтвердить</button>
+      </div>
     </div>
+  </div>
+</div>
 
 
 <div class="container">
@@ -52,7 +49,7 @@
             <div class="row">
                 {% for photo in allPhoto %}
                 <div class="col-sm-6 col-md-4 col-lg-3 item">
-                    <a href="{{ photo.get_url }}" data-lightbox="photos" liked{% if photo.name in object.chosen %}="1"{% endif %}><img class=" shadow-sm bg-white rounded img-fluid" loading="lazy" src="{{ photo.get_url }}" alt=""></a>
+                    <a href="{{ photo.get_url }}" data-lightbox="photos" liked{% if photo.name in object.chosen %}="1"{% endif %}><img class="img-fluid" loading="lazy" src="{{ photo.get_url }}" alt=""></a>
                     <button class="btn-small btn-photo like {% if photo.name in object.chosen %} liked{% endif %}" data="{{ photo }}"><i class="bi bi-heart-fill"></i></button>
                 </div>
                 {% endfor %}
@@ -75,43 +72,43 @@
 <script>
 $(function() {
     UpdateText({{ object.chosen|length }});
-    $('#confirm').on('click', function () {
-        $.ajax({
-            url: '{% url 'like-confirm' %}',
-            type: 'POST',
-            data: {
-                photoshoot_id: {{ object.id }},
-                comment: $('#comment').val(),
-                csrfmiddlewaretoken: '{{ csrf_token }}',
-            },
-            dataType: 'json',
-            success: function (response) {
-                $(location).attr('href', "{% url 'personal-area' %}");
-            },
-            error: function (responce) {
+     $('#confirm').on('click', function() {
+         $.ajax({
+             url: '{% url 'like-confirm' %}',
+             type: 'POST',
+             data: {
+                 photoshoot_id: {{ object.id }},
+                 comment : $('#comment').val(),
+                 csrfmiddlewaretoken: '{{ csrf_token }}',
+             },
+             dataType: 'json',
+             success: function (response) {
+                 $(location).attr('href', "{% url 'personal-area' %}");
+             },
+             error: function (responce) {
 
-                $('#warning').text("Что-то пошло не так...");
-                console.log("Some Error just happened...");
-            }
-        });
-    });
+                 $('#warning').text("Что-то пошло не так...");
+                 console.log("Some Error just happened...");
+             }
+         });
+     });
 
-    $('.like').on('click', function () {
+    $('.like').on('click', function() {
         let action = 1;
         let class_data = $(this).attr('class');
         if (class_data.indexOf('liked') != -1)
             action = 0;
         let name = $(this).attr('data');
         $.ajax({
-            url: '{% url 'like-action' %}',
-            type: 'POST',
-            data: {
-                photoshoot_id: {{ object.id }},
-                action: action,
-                name: name,
-                csrfmiddlewaretoken: '{{ csrf_token }}',
-            },
-            dataType: 'json',
+			url: '{% url 'like-action' %}',
+			type: 'POST',
+            data:{
+                  photoshoot_id: {{ object.id }},
+                  action : action,
+                  name : name,
+                  csrfmiddlewaretoken: '{{ csrf_token }}',
+                },
+			dataType: 'json',
             success: function (response) {
                 $(`button[data='${response.name}']`).each(function () {
                     if (response.step == '1')
@@ -123,19 +120,20 @@ $(function() {
                 let element = $(`a[href*='${response.name}']`)
 
                 if (response.step == '1')
-                    element.attr('liked', '1');
-                else
-                    element.attr('liked', null);
+                        element.attr('liked', '1');
+                    else
+                        element.attr('liked', null);
                 UpdateText(response.count);
             },
-            error: function (responce) {
-                console.log("Some Error just happened...");
+            error: function (responce){
+			    console.log("Some Error just happened...");
             }
-        });
+		});
     });
 });
 
-function UpdateText(count) {
+function UpdateText(count)
+{
     $('.count').text(count);
     if (count < {{ object.num_choose }}) {
         $('#warning').text("Вы выбрали мало фотографий, однако если вы уверены, нажимайте подтвердить.");
