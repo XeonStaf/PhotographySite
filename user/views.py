@@ -31,7 +31,6 @@ class PersonalArea(LoginRequiredMixin, generic.ListView):
         vk_session = vk_api.VkApi(token=VK_BOT_TOKEN)
         vk_session_api = vk_session.get_api()
         user_id = SocialAccount.objects.get(user=self.request.user).uid
-        print(vk_session_api.messages.isMessagesFromGroupAllowed(user_id=user_id, group_id=VK_GROUP_ID))
         if vk_session_api.messages.isMessagesFromGroupAllowed(user_id=user_id, group_id=VK_GROUP_ID)['is_allowed']:
             context['warning_vk'] = False
         else:
