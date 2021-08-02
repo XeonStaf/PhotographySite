@@ -97,6 +97,10 @@ class Review(models.Model):
         null=True, blank=True,
         verbose_name="Оцените ваше общее впечатление от фото (от 1 до 5)"
     )
+    rate_site_speed = models.IntegerField(
+        null=True, blank=True,
+        verbose_name="Оцените скорость работы сайта (от 1 до 5)"
+    )
 
     def __str__(self):
         return "Отзыв " + str(self.photo_shoot.__str__())

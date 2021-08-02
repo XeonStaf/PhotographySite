@@ -11,11 +11,11 @@ class ReviewForm(forms.ModelForm):
 
     class Meta:
         model = Review
-        fields = ('what_liked', 'what_disliked', 'post_photo_in_social', 'rate_mood', 'rate_photo')
+        fields = ('what_liked', 'what_disliked', 'post_photo_in_social', 'rate_mood', 'rate_photo', 'rate_site_speed')
         widgets = {
             'rate_mood': Stars,
             'rate_photo': Stars,
-
+            'rate_site_speed': Stars
         }
 
     def __init__(self, *args, **kwargs):
@@ -28,6 +28,7 @@ class ReviewForm(forms.ModelForm):
                 Column('post_photo_in_social', css_class=''),
                 Column('rate_mood', css_class='form-group mb-3'),
                 Column('rate_photo', css_class='form-group mb-3'),
+                Column('rate_site_speed', css_class='form-group mb-3'),
                 css_class='form-row'
             ),
             Submit('sumbit', 'Отправить', css_class="btn btn-all btn-next", style="position: relative; left: 25%")

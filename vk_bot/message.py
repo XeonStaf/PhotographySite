@@ -1,4 +1,4 @@
-import vk, vk_api
+import vk_api
 from vk_api.utils import get_random_id
 from PhotographSite.settings import VK_BOT_TOKEN
 
@@ -18,7 +18,7 @@ MessageText = {
 
 
 def decorate_message(photoshoot, message):
-    url = f'http://127.0.0.1:8000{photoshoot.get_absolute_url()}'
+    url = f'https://photoalex.herokuapp.com{photoshoot.get_absolute_url()}'
     params = {
         '{photoshoot}': photoshoot.__str__(),
         '{name}': str(photoshoot.linkUser.first_name),
