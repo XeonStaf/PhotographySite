@@ -20,6 +20,7 @@ AWS_SECRET_ACCESS_KEY = os.environ.get('BUCKETEER_AWS_SECRET_ACCESS_KEY')
 AWS_STORAGE_BUCKET_NAME = os.environ.get('BUCKETEER_BUCKET_NAME')
 
 VK_BOT_TOKEN = os.environ.get('VK_BOT_TOKEN')
+VK_GROUP_ID = os.environ.get('VK_GROUP_ID')
 SECRET_KEY = os.environ.get('SECRET_KEY')
 DEBUG = os.environ.get('DEBUG')
 

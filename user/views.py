@@ -1,9 +1,11 @@
-from django.shortcuts import render
 from allauth.account.views import SignupView
 from photoshoots.models import photo_shoot
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
 from photoshoots.models import Review
+import vk_api
+from PhotographSite.settings import VK_BOT_TOKEN, VK_GROUP_ID
+from allauth.socialaccount.models import SocialAccount
 
 
 class PersonalArea(LoginRequiredMixin, generic.ListView):
@@ -24,6 +26,17 @@ class PersonalArea(LoginRequiredMixin, generic.ListView):
         context['navbar_show'] = True
         context['menu'] = menu
         context['title'] = "Личный Кабинет"
+
+        # Проверка можно ли писать пользователю сообщения
+        vk_session = vk_api.VkApi(token=VK_BOT_TOKEN)
+        vk_session_api = vk_session.get_api()
+        user_id = SocialAccount.objects.get(user=self.request.user).uid
+        print(vk_session_api.messages.isMessagesFromGroupAllowed(user_id=user_id, group_id=VK_GROUP_ID))
+        if vk_session_api.messages.isMessagesFromGroupAllowed(user_id=user_id, group_id=VK_GROUP_ID)['is_allowed']:
+            context['warning_vk'] = False
+        else:
+            context['warning_vk'] = True
+        context['VK_GROUP_ID'] = VK_GROUP_ID
 
         return context
 

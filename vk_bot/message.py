@@ -1,7 +1,6 @@
 import vk_api
 from vk_api.utils import get_random_id
-from PhotographSite.settings import VK_BOT_TOKEN
-
+from PhotographSite.settings import VK_BOT_TOKEN, VK_GROUP_ID
 """Есть возможность добавлять строчки сообщений для других людей. Main - основное"""
 
 MessageText = {
@@ -36,4 +35,5 @@ def send_message(user_id, message, photoshoot):
     message = decorate_message(photoshoot, message)
     vk_session = vk_api.VkApi(token=VK_BOT_TOKEN)
     vk_session_api = vk_session.get_api()
-    vk_session_api.messages.send(user_id=str(user_id), message=message, random_id=get_random_id())
+    if vk_session_api.messages.isMessagesFromGroupAllowed(user_id=user_id, group_id=VK_GROUP_ID)['is_allowed']:
+        vk_session_api.messages.send(user_id=str(user_id), message=message, random_id=get_random_id())
