@@ -138,7 +138,7 @@ $(function() {
 function UpdateText(count) {
     $('.count').text(count);
     if (count < {{ object.num_choose }}) {
-        $('#warning').text("Вы выбрали мало фотографий, однако если вы уверены, нажимайте Потвердить.");
+        $('#warning').text("Вы выбрали мало фотографий, однако если вы уверены, нажимайте подтвердить.");
         $('#confirm').prop('disabled', false);
     }
     if (count > {{ object.num_choose }}) {
