@@ -3,7 +3,7 @@
     <div class="container pb-5 d-flex flex-column align-items-center" style="min-height: 100%; padding-top:15vh;">
     <h2>Привет, {{ request.user.first_name }}</h2>
     {% if warning_vk %}
-        <div class="card">
+        <div class="card my-3">
             <div class="card-body">
                 <p class="card-text" style="margin: 0px">Я могу присылать вам сообщения, о том, что происходит с вашей фотосессий. <br>Для этого, разрешите боту присылать вам сообщения</p>
                 <script type="text/javascript" src="https://vk.com/js/api/openapi.js?169"></script>
