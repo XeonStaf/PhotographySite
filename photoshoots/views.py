@@ -8,6 +8,7 @@ from photoshoots.utility import permission
 from .forms import ReviewForm
 from django.shortcuts import render
 from django.shortcuts import redirect
+from django.templatetags.static import static
 
 
 class PhotoShootsDetailView(PermissionRequiredMixin, generic.DetailView):
@@ -26,14 +27,17 @@ class PhotoShootsDetailView(PermissionRequiredMixin, generic.DetailView):
         # Генерация случайной фотографии из серии на обложку
         context = super().get_context_data(**kwargs)
         all_photo = Image.objects.filter(album=context['object'].linkAlbum)
-        result = random.choice(all_photo.all()).get_url()
+        if all_photo.count() == 0:
+            result = static('/images/home.jpg')
+        else:
+            result = random.choice(all_photo.all()).get_url()
 
-        context['main_photo'] = result
-        context['menu'] = menu
-        context['allPhoto'] = all_photo
         context['title'] = "Выбор Фото - " + context['object'].name
         context['right_text'] = 'Выбрано <span class="count"></span> из ' + str(
             context['object'].num_choose) + ' снимков'
+        context['main_photo'] = result
+        context['menu'] = menu
+        context['allPhoto'] = all_photo
         context['special_file'] = True
         return context
 

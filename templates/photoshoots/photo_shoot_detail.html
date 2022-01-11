@@ -42,8 +42,12 @@
 
 <div class="container">
     <div class="photo-gallery mt-4">
+        {% if allPhoto|length == 0 %}
+        <h3 class="justify-content-cente">Уупс, фотографии еще не загружены</h3> <br>
+
+        {% endif %}
         {% if object.state == 3 %}
-            <h3>Вы выбрали уже фотографии. Чтобы изменить выбор, напишите фотографу</h3>
+            <h3>Вы уже выбрали фотографии. Чтобы изменить выбор, напишите фотографу</h3>
             <br>
         {% endif %}
             <div class="row">

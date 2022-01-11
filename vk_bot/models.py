@@ -2,6 +2,7 @@ from django.db import models
 from photoshoots.models import photo_shoot
 from django.dispatch import receiver
 from photoshoots.utility import States_for_model
+from portfolio.models import Image
 from .message import MessageText, send_message
 from allauth.socialaccount.models import SocialAccount
 
@@ -19,6 +20,8 @@ def photo_shoot_change_status(sender, instance, **kwargs):
         message = MessageText['main']
         user_id = SocialAccount.objects.get(user=instance.linkUser).uid
         photographer = '152855497'
+
+
         if text_new_state == "Отправлено":
             send_message(user_id, message['PhotoReady'], instance)
 

@@ -11,7 +11,7 @@ MessageText = {
         'OpenAccessAgain': 'Привет, {name}!\nЯ заново открыл доступ для выбора)\n{chose_link}',
         'OpenAccess': 'Привет, {name}! \nЯ загрузил фотографии на сайт и ты можешь выбрать {num_chose} снимков.\nДля '
                       'этого перейди по ссылочке {chose_link}\n ',
-        'Ready': '{username} сделал свой выбор по фотосесии {photoshoot}'
+        'Ready': '{username} сделал свой выбор по фотосессии {photoshoot}',
     }
 }
 

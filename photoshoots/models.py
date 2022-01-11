@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.urls import reverse
 from photoshoots.utility import States_for_model, States
@@ -34,6 +35,12 @@ class photo_shoot(models.Model):
 
     class Meta:
         ordering = ['-date', 'state']
+
+    def clean(self):
+        from portfolio.models import Image
+        if self.state == 4 and len(Image.objects.filter(album=self.linkAlbum)) == 0:
+            raise ValidationError("You can't change state to this. Photoshoot doesn't contain any photo")
+        return self
 
     def like_photo(self, action, name):
         data = set(self.chosen)
