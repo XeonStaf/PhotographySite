@@ -13,7 +13,7 @@ class Album(models.Model):
         return self.name
 
 
-class photo_shoot(models.Model):
+class PhotoShoot(models.Model):
     """Модель, в котором храниться все данные о фотосессии"""
     """Фотографии храняться в связанном альбоме, есть связь с пользователем"""
     name = models.CharField(max_length=50, verbose_name="Название фотосессии")
@@ -88,7 +88,7 @@ class photo_shoot(models.Model):
 
 class Review(models.Model):
     """Модель отзыва. В ней хранятся вопросы и соединенная фотосессия"""
-    photo_shoot = models.ForeignKey(photo_shoot, on_delete=models.RESTRICT)
+    photo_shoot = models.ForeignKey(PhotoShoot, on_delete=models.RESTRICT)
 
     # question
     what_liked = models.TextField(null=True, blank=True,
@@ -110,4 +110,4 @@ class Review(models.Model):
     )
 
     def __str__(self):
-        return "Отзыв " + str(self.photo_shoot.__str__())
+        return "Отзыв " + str(self.PhotoShoot.__str__())

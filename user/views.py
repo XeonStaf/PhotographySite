@@ -1,5 +1,5 @@
 from allauth.account.views import SignupView
-from photoshoots.models import photo_shoot
+from photoshoots.models import PhotoShoot
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
 from photoshoots.models import Review
@@ -10,12 +10,12 @@ from allauth.socialaccount.models import SocialAccount
 
 class PersonalArea(LoginRequiredMixin, generic.ListView):
     """Личный кабинет, где перечисляются фотосессии пользователя"""
-    model = photo_shoot
+    model = PhotoShoot
     template_name = 'user/PersonalArea.html'
     paginate_by = 10
 
     def get_queryset(self):
-        return photo_shoot.objects.filter(linkUser=self.request.user)
+        return PhotoShoot.objects.filter(linkUser=self.request.user)
 
     def get_context_data(self, **kwargs):
         menu = [

@@ -1,4 +1,4 @@
-from .models import photo_shoot, Review
+from .models import PhotoShoot, Review
 from django.views import generic
 from portfolio.models import Image
 import random
@@ -13,10 +13,10 @@ from django.templatetags.static import static
 
 class PhotoShootsDetailView(PermissionRequiredMixin, generic.DetailView):
     """Страничка, где клиент выбирает фотографии, которые ему понравились"""
-    model = photo_shoot
+    model = PhotoShoot
 
     def has_permission(self):
-        obj = photo_shoot.objects.get(pk=self.kwargs['pk'])
+        obj = PhotoShoot.objects.get(pk=self.kwargs['pk'])
         return permission(obj, self.request)
 
     def get_context_data(self, **kwargs):
@@ -47,7 +47,7 @@ PhotoShootsDetail = PhotoShootsDetailView.as_view()
 
 def like_action(request):
     if request.method == "POST" and request.is_ajax():
-        obj = photo_shoot.objects.get(id=request.POST['photoshoot_id'])
+        obj = PhotoShoot.objects.get(id=request.POST['photoshoot_id'])
         if request.user == obj.linkUser and obj.state == 4:
             count = obj.like_photo(request.POST['action'], request.POST['name'])
             return JsonResponse({'count': count, 'name': request.POST['name'], 'step': request.POST['action']},
@@ -59,7 +59,7 @@ def like_action(request):
 def confirm(request):
     if request.method == "POST" and request.is_ajax():
 
-        obj = photo_shoot.objects.get(id=request.POST['photoshoot_id'])
+        obj = PhotoShoot.objects.get(id=request.POST['photoshoot_id'])
         if request.user == obj.linkUser:
             obj.comment = request.POST['comment']
             obj.save()
@@ -77,7 +77,7 @@ def review_new(request, pk):
         ("bi-house", "portfolio"),
         ("bi-person-square", "personal-area")
     ]
-    if request.user == photo_shoot.objects.get(pk=pk).linkUser:
+    if request.user == PhotoShoot.objects.get(pk=pk).linkUser:
         return render(request, 'photoshoots/review_detail.html',
                       context={
                           'form': form,
@@ -93,7 +93,7 @@ def review_new(request, pk):
 
 def confirm_review(request):
     if request.method == "POST" and request.is_ajax():
-        photoshoots = photo_shoot.objects.get(pk=request.POST['pk'])
+        photoshoots = PhotoShoot.objects.get(pk=request.POST['pk'])
         if request.user == photoshoots.linkUser:
             if Review.objects.filter(photo_shoot=photoshoots).exists():
                 return JsonResponse(

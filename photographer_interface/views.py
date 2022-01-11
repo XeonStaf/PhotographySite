@@ -5,7 +5,7 @@ from portfolio.models import Image
 from photoshoots.models import Album
 from django.shortcuts import redirect
 from django.views import generic
-from photoshoots.models import photo_shoot
+from photoshoots.models import PhotoShoot
 from django.contrib.auth.mixins import PermissionRequiredMixin
 
 
@@ -45,7 +45,7 @@ def upload(request):
 
 class AllPhoto(PermissionRequiredMixin, generic.ListView):
     """Личный кабинет, где перечисляются фотосессии пользователя"""
-    model = photo_shoot
+    model = PhotoShoot
     template_name = 'photographer_interface/all_photos.html'
     paginate_by = 10
 
@@ -53,7 +53,7 @@ class AllPhoto(PermissionRequiredMixin, generic.ListView):
         return self.request.user.is_superuser
 
     def get_queryset(self):
-        return photo_shoot.objects.all()
+        return PhotoShoot.objects.all()
 
     def get_context_data(self, **kwargs):
         menu = [

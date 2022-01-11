@@ -1,5 +1,5 @@
 from django.db import models
-from photoshoots.models import photo_shoot
+from photoshoots.models import PhotoShoot
 from django.dispatch import receiver
 from photoshoots.utility import States_for_model
 from portfolio.models import Image
@@ -7,10 +7,10 @@ from .message import MessageText, send_message
 from allauth.socialaccount.models import SocialAccount
 
 
-@receiver(models.signals.pre_save, sender=photo_shoot)
+@receiver(models.signals.pre_save, sender=PhotoShoot)
 def photo_shoot_change_status(sender, instance, **kwargs):
     try:
-        old_state = photo_shoot.objects.get(pk=instance.pk).state
+        old_state = PhotoShoot.objects.get(pk=instance.pk).state
     except:
         old_state = 1
     new_state = instance.state
